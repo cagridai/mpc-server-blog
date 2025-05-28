@@ -1,0 +1,23 @@
+services:
+  dev-db:
+    image: postgres
+    ports:
+      - 5436:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: blog
+    networks:
+      - test
+  test-db:
+    image: postgres
+    ports:
+      - 5437:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: blog
+    networks:
+      - test
+networks:
+  test:
