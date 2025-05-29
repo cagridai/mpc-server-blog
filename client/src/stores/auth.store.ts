@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { User, LoginRequest, RegisterRequest } from "@/types";
 import { authService } from "../services/auth.service";
+import { getUserIdFromLocalStorage } from "@/utils/getUserIdFromLocalStorage";
 
 interface AuthState {
   user: User | null;
@@ -86,10 +87,11 @@ export const useAuthStore = create<AuthState & AuthActions>()(
 
       initializeAuth: async () => {
         const token = localStorage.getItem("access_token");
+        const userId = getUserIdFromLocalStorage();
         if (token) {
           try {
             set({ isLoading: true });
-            const user = await authService.getCurrentUser();
+            const user = await authService.getCurrentUser(userId!);
             set({
               user,
               token,
@@ -115,6 +117,6 @@ export const useAuthStore = create<AuthState & AuthActions>()(
         token: state.token,
         isAuthenticated: state.isAuthenticated,
       }),
-    },
-  ),
+    }
+  )
 );

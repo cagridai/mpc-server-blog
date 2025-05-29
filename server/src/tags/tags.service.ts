@@ -59,7 +59,7 @@ export class TagsService {
         orderBy = { name: sortOrder };
     }
 
-    return this.prisma.tag.findMany({
+    const data = await this.prisma.tag.findMany({
       where,
       include: {
         _count: {
@@ -68,6 +68,8 @@ export class TagsService {
       },
       orderBy,
     });
+
+    return { data };
   }
 
   async findPopular(limit: number = 10) {

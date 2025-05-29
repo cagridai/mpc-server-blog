@@ -16,8 +16,8 @@ export const authService = {
     return api.post<AuthResponse>("/auth/register", userData);
   },
 
-  async getCurrentUser(): Promise<User> {
-    return api.get<User>("/auth/me");
+  async getCurrentUser(id: string): Promise<User> {
+    return api.get<User>(`/users/${id}`);
   },
 
   async logout(): Promise<void> {
@@ -26,7 +26,7 @@ export const authService = {
 
   async changePassword(
     userId: string,
-    passwords: ChangePasswordRequest,
+    passwords: ChangePasswordRequest
   ): Promise<void> {
     return api.post<void>(`/users/${userId}/change-password`, passwords);
   },

@@ -21,8 +21,6 @@ export const ProfilePage: React.FC = () => {
     updateUser,
     loading: userLoading,
     error: userError,
-    // Optional resetUser if supported in store
-    // resetUser
   } = useUserStore();
 
   const [posts, setPosts] = useState<Post[]>([]);
@@ -36,33 +34,28 @@ export const ProfilePage: React.FC = () => {
 
   const isOwnProfile = isAuthenticated && currentUser?.username === username;
 
-  // 🔄 Reset and load user on username change
   useEffect(() => {
     if (!username) return;
-
     setPosts([]);
     setPostsLoading(true);
-    // resetUser?.(); // If your store supports it
-
-    getUserByUsername(username).then((fetchedUser) => {
-      if (isOwnProfile && fetchedUser) {
-        setEditForm({
-          name: fetchedUser.name || "",
-          bio: fetchedUser.bio || "",
-          avatar: fetchedUser.avatar || "",
-        });
-      }
-      setPostsLoading(false);
-    });
-  }, [username]);
-
-  // 📦 Load posts when user is loaded
+    setIsEditing(false);
+    getUserByUsername(username);
+  }, [username, getUserByUsername]);
+  
   useEffect(() => {
-    if (!user?.id) return;
-
-    setPostsLoading(true);
-    setPosts([]);
-
+    if (!user) {
+      setPostsLoading(false);
+      return;
+    }
+  
+    if (isOwnProfile) {
+      setEditForm({
+        name: user.name || "",
+        bio: user.bio || "",
+        avatar: user.avatar || "",
+      });
+    }
+  
     postsService
       .getPosts({
         published: true,
@@ -76,14 +69,7 @@ export const ProfilePage: React.FC = () => {
         setPosts([]);
       })
       .finally(() => setPostsLoading(false));
-    console.log(
-      postsService.getPosts({
-        published: true,
-        authorId: user.id,
-        limit: 20,
-      }),
-    );
-  }, [user?.id]);
+  }, [user, isOwnProfile]);
 
   const handleEditSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

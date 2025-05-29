@@ -39,7 +39,7 @@ export const CreatePostForm: React.FC = () => {
     excerpt: "",
     published: false,
     featured: false,
-    categoryId: "", // This will be handled properly now
+    categoryId: "",
     tagIds: [],
   });
 
@@ -77,14 +77,17 @@ export const CreatePostForm: React.FC = () => {
       };
 
       const post = await createPost(postData);
-      navigate(`/post/${post.slug}`);
+      if (!post || !post.slug) {
+        throw new Error("Post creation failed or missing slug.");
+      }
+      navigate(`/posts/${post.slug}`);
     } catch (error) {
       console.error("Failed to create post:", error);
     }
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -238,9 +241,9 @@ export const CreatePostForm: React.FC = () => {
                     <SelectValue placeholder="Add existing tag" />
                   </SelectTrigger>
                   <SelectContent>
-                    {tags
+                    {(tags ?? [])
                       .filter(
-                        (tag) => !selectedTags.find((t) => t.id === tag.id),
+                        (tag) => !selectedTags.find((t) => t.id === tag.id)
                       )
                       .map((tag) => (
                         <SelectItem key={tag.id} value={tag.id}>
@@ -304,7 +307,7 @@ export const CreatePostForm: React.FC = () => {
             </div>
           </CardContent>
 
-          <CardFooter className="flex justify-between">
+          <CardFooter className="flex justify-between pt-4">
             <Button
               type="button"
               variant="outline"

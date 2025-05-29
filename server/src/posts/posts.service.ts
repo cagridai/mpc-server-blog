@@ -106,7 +106,7 @@ export class PostsService {
       },
     };
   }
-  //some random text
+
   async findOne(slug: string) {
     const post = await this.prisma.post.findUnique({
       where: { slug },

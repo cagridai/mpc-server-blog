@@ -12,6 +12,7 @@ interface UserStoreState {
   getUserByUsername: (username: string) => Promise<void>;
   updateUser: (id: string, userData: UpdateUserRequest) => Promise<void>;
   clearError: () => void;
+  clearUser: () => void;
 }
 
 export const useUserStore = create<UserStoreState>((set) => ({
@@ -65,4 +66,5 @@ export const useUserStore = create<UserStoreState>((set) => ({
   },
 
   clearError: () => set({ error: null }),
+  clearUser: () => set({ user: null }),
 }));

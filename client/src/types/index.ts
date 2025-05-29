@@ -49,6 +49,7 @@ export interface Post {
   categoryId: string;
   createdAt: string;
   updatedAt: string;
+  views: number;
   author: User;
   category: Category;
   tags: Tag[];

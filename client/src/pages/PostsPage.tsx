@@ -49,7 +49,7 @@ export function PostsPage() {
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8">Latest Posts</h1>
       <div className="space-y-6">
-        {posts.map((post) => (
+        {posts.posts.map((post) => (
           <div
             key={post.id}
             className="p-6 border rounded-lg shadow-sm hover:shadow-md transition"

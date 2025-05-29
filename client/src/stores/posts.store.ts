@@ -51,7 +51,7 @@ export const usePostsStore = create<PostsState & PostsActions>()(
       try {
         const posts = await postsService.getPosts(filters);
         set({
-          posts: posts,
+          posts,
           pagination: {
             ...get().pagination,
             total: posts.length,
@@ -126,7 +126,7 @@ export const usePostsStore = create<PostsState & PostsActions>()(
         const updatedPost = await postsService.updatePost(id, postData);
         set((state) => ({
           posts: state.posts.map((post) =>
-            post.id === id ? updatedPost : post,
+            post.id === id ? updatedPost : post
           ),
           currentPost:
             state.currentPost?.id === id ? updatedPost : state.currentPost,
@@ -165,5 +165,5 @@ export const usePostsStore = create<PostsState & PostsActions>()(
 
     clearCurrentPost: () => set({ currentPost: null }),
     clearError: () => set({ error: null }),
-  }),
+  })
 );

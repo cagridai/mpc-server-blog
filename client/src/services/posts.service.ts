@@ -16,15 +16,14 @@ export const postsService = {
     return api.get<ApiResponse<Post>>(`/posts/${slug}`);
   },
 
-  async createPost(postData: CreatePostRequest): Promise<Post> {
-    const response = await api.post<ApiResponse<Post>>("/posts", postData);
-    return response.data;
+  async createPost(postData: CreatePostRequest): Promise<ApiResponse<Post>> {
+    return api.post<ApiResponse<Post>>("/posts", postData);
   },
 
   async updatePost(id: string, postData: UpdatePostRequest): Promise<Post> {
     const response = await api.patch<ApiResponse<Post>>(
       `/posts/${id}`,
-      postData,
+      postData
     );
     return response.data;
   },
