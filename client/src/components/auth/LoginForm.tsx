@@ -59,7 +59,7 @@ export const LoginForm: React.FC = () => {
                 id="email"
                 name="email"
                 type="email"
-                value={form.email ? form.email : "john@example.com"}
+                value={form.email ? form.email : "test@blog.com"}
                 onChange={handleChange}
                 required
               />
@@ -73,7 +73,7 @@ export const LoginForm: React.FC = () => {
                 id="password"
                 name="password"
                 type="password"
-                value={form.password ? form.password : "newpassword456"}
+                value={form.password ? form.password : "test123"}
                 onChange={handleChange}
                 required
               />
