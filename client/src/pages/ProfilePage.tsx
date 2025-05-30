@@ -41,13 +41,13 @@ export const ProfilePage: React.FC = () => {
     setIsEditing(false);
     getUserByUsername(username);
   }, [username, getUserByUsername]);
-  
+
   useEffect(() => {
     if (!user) {
       setPostsLoading(false);
       return;
     }
-  
+
     if (isOwnProfile) {
       setEditForm({
         name: user.name || "",
@@ -55,7 +55,7 @@ export const ProfilePage: React.FC = () => {
         avatar: user.avatar || "",
       });
     }
-  
+
     postsService
       .getPosts({
         published: true,
@@ -272,7 +272,7 @@ export const ProfilePage: React.FC = () => {
               </p>
               {isOwnProfile && (
                 <Button asChild className="mt-4">
-                  <a href="/write">Write Your First Post</a>
+                  <a href="/create">Write Your First Post</a>
                 </Button>
               )}
             </CardContent>

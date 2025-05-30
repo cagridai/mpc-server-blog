@@ -100,13 +100,13 @@ export interface CreatePostRequest {
 }
 
 export interface UpdatePostRequest {
-  title?: string;
-  content?: string;
+  title: string;
+  content: string;
   excerpt?: string;
-  published?: boolean;
-  featured?: boolean;
-  categoryId?: string;
-  tagIds?: string[];
+  published: boolean;
+  featured: boolean;
+  category?: { connect?: { id: string }; disconnect?: boolean };
+  tags?: { set: { id: string }[] };
 }
 
 export interface CreateCommentRequest {

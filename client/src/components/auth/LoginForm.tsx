@@ -38,7 +38,7 @@ export const LoginForm: React.FC = () => {
   };
 
   return (
-    <div className="lex items-center justify-center bg-background">
+    <div className="items-center justify-center bg-background">
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle className="text-center">Login</CardTitle>

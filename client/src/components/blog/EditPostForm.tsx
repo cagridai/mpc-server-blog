@@ -46,8 +46,8 @@ export const EditPostForm: React.FC<EditPostFormProps> = ({
     excerpt: "",
     published: false,
     featured: false,
-    categoryId: "",
-    tagIds: [],
+    category: "",
+    tags: [],
   });
 
   const [categories, setCategories] = useState<Category[]>([]);
@@ -81,8 +81,8 @@ export const EditPostForm: React.FC<EditPostFormProps> = ({
       excerpt: postData.excerpt || "",
       published: postData.published,
       featured: postData.featured,
-      categoryId: postData.categoryId || "",
-      tagIds: postData.tags.map((tag) => tag.id),
+      category: postData.categoryId || undefined,
+      tags: postData.tags.map((tag) => tag.id),
     });
     setSelectedTags(postData.tags);
   };
@@ -123,19 +123,19 @@ export const EditPostForm: React.FC<EditPostFormProps> = ({
     try {
       await updatePost(post.id, {
         ...form,
-        tagIds: selectedTags.map((tag) => tag.id),
+        tags: selectedTags.map((tag) => tag.id),
       });
       navigate(`/post/${post.slug}`);
     } catch (error) {
       console.error("Failed to update post:", error);
       setError(
-        error instanceof Error ? error.message : "Failed to update post",
+        error instanceof Error ? error.message : "Failed to update post"
       );
     }
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -292,7 +292,7 @@ export const EditPostForm: React.FC<EditPostFormProps> = ({
             <div className="space-y-2">
               <label className="text-sm font-medium">Category</label>
               <Select
-                value={form.categoryId}
+                value={form.category}
                 onValueChange={(value) =>
                   setForm((prev) => ({ ...prev, categoryId: value }))
                 }
@@ -301,7 +301,7 @@ export const EditPostForm: React.FC<EditPostFormProps> = ({
                   <SelectValue placeholder="Select a category" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">No Category</SelectItem>
+                  <SelectItem value="No Category">No Category</SelectItem>
                   {categories.map((category) => (
                     <SelectItem key={category.id} value={category.id}>
                       {category.name}
@@ -348,7 +348,7 @@ export const EditPostForm: React.FC<EditPostFormProps> = ({
                   <SelectContent>
                     {tags
                       .filter(
-                        (tag) => !selectedTags.find((t) => t.id === tag.id),
+                        (tag) => !selectedTags.find((t) => t.id === tag.id)
                       )
                       .map((tag) => (
                         <SelectItem key={tag.id} value={tag.id}>
@@ -416,7 +416,7 @@ export const EditPostForm: React.FC<EditPostFormProps> = ({
             </div>
           </CardContent>
 
-          <CardFooter className="flex justify-between">
+          <CardFooter className="flex justify-between pt-4">
             <Button
               type="button"
               variant="outline"

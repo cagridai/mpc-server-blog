@@ -85,7 +85,7 @@ export const PostDetail: React.FC = () => {
             {canEdit && (
               <>
                 <Button asChild variant="outline" size="sm">
-                  <Link to={`/edit/${currentPost.id}`}>
+                  <Link to={`/edit/${currentPost.slug}`}>
                     <Edit className="h-4 w-4 mr-1" />
                     Edit
                   </Link>

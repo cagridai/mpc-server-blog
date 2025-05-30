@@ -8,24 +8,20 @@ import type {
 } from "@/types";
 
 export const postsService = {
-  async getPosts(filters?: PostFilters): Promise<ApiResponse<Post[]>> {
-    return api.get<ApiResponse<Post[]>>("/posts", filters);
+  async getPosts(filters?: PostFilters): Promise<Post[]> {
+    return api.get<Post[]>("/posts", filters);
   },
 
-  async getPostBySlug(slug: string): Promise<ApiResponse<Post>> {
-    return api.get<ApiResponse<Post>>(`/posts/${slug}`);
+  async getPostBySlug(slug: string): Promise<Post> {
+    return api.get<Post>(`/posts/${slug}`);
   },
 
-  async createPost(postData: CreatePostRequest): Promise<ApiResponse<Post>> {
-    return api.post<ApiResponse<Post>>("/posts", postData);
+  async createPost(postData: CreatePostRequest): Promise<Post> {
+    return api.post<Post>("/posts", postData);
   },
 
   async updatePost(id: string, postData: UpdatePostRequest): Promise<Post> {
-    const response = await api.patch<ApiResponse<Post>>(
-      `/posts/${id}`,
-      postData
-    );
-    return response.data;
+    return api.patch<Post>(`/posts/${id}`, postData);
   },
 
   async deletePost(id: string): Promise<void> {
