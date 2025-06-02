@@ -7,6 +7,7 @@ import { usePostsStore } from "@/stores/posts.store.ts";
 import { useAuthStore } from "@/stores/auth.store.ts";
 import { formatDistance } from "date-fns";
 import { User, Calendar, Eye, Edit, Trash2, Share2 } from "lucide-react";
+import { ConfirmDialog } from "../common/ConfirmationDialog";
 
 export const PostDetail: React.FC = () => {
   const navigate = useNavigate();
@@ -15,14 +16,10 @@ export const PostDetail: React.FC = () => {
 
   const { user, isAuthenticated } = useAuthStore();
   const [isDeleting, setIsDeleting] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   const handleDelete = async () => {
-    if (
-      !currentPost ||
-      !window.confirm("Are you sure you want to delete this post?")
-    ) {
-      return;
-    }
+    if (!currentPost) return;
 
     setIsDeleting(true);
     try {
@@ -64,6 +61,15 @@ export const PostDetail: React.FC = () => {
 
   return (
     <div className="max-w-4xl mx-auto">
+      {/* Confirmation Dialog */}
+      <ConfirmDialog
+        open={showConfirmation}
+        title="Delete Post"
+        description="Are you sure you want to delete this post?"
+        onConfirm={handleDelete}
+        onCancel={() => setShowConfirmation(false)}
+        loading={isDeleting}
+      />
       {/* Post Header */}
       <header className="mb-8">
         <div className="flex items-center justify-between mb-4">
@@ -94,7 +100,7 @@ export const PostDetail: React.FC = () => {
                 <Button
                   variant="destructive"
                   size="sm"
-                  onClick={handleDelete}
+                  onClick={() => setShowConfirmation(true)}
                   disabled={isDeleting}
                 >
                   <Trash2 className="h-4 w-4 mr-1" />
