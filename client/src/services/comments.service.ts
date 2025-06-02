@@ -1,17 +1,12 @@
 import { api } from "./api";
-import type {
-  Comment,
-  CreateCommentRequest,
-  CommentFilters,
-  ApiResponse,
-} from "@/types";
+import type { Comment, CreateCommentRequest, CommentFilters } from "@/types";
 
 export const commentsService = {
   async getCommentsByPost(
     postId: string,
-    filters?: Omit<CommentFilters, "postId">,
-  ): Promise<ApiResponse<Comment[]>> {
-    return api.get<ApiResponse<Comment[]>>(`/comments/post/${postId}`, filters);
+    filters?: Omit<CommentFilters, "postId">
+  ): Promise<Comment[]> {
+    return api.get<Comment[]>(`/comments/post/${postId}`, filters);
   },
 
   async createComment(commentData: CreateCommentRequest): Promise<Comment> {
@@ -24,7 +19,7 @@ export const commentsService = {
 
   async updateComment(
     id: string,
-    commentData: { content: string },
+    commentData: { content: string }
   ): Promise<Comment> {
     return api.patch<Comment>(`/comments/${id}`, commentData);
   },
