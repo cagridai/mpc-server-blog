@@ -9,32 +9,40 @@ import {
   Min,
 } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreatePostDto {
+  @ApiProperty()
   @IsString()
   @IsNotEmpty()
   title: string;
 
+  @ApiProperty()
   @IsString()
   @IsNotEmpty()
   content: string;
 
+  @ApiProperty()
   @IsString()
   @IsOptional()
   excerpt?: string;
 
+  @ApiProperty()
   @IsBoolean()
   @IsOptional()
   published?: boolean;
 
+  @ApiProperty()
   @IsBoolean()
   @IsOptional()
   featured?: boolean;
 
+  @ApiProperty()
   @IsString()
   @IsOptional()
   categoryId?: string;
 
+  @ApiProperty()
   @IsArray()
   @IsString({ each: true })
   @IsOptional()
@@ -42,30 +50,37 @@ export class CreatePostDto {
 }
 
 export class UpdatePostDto {
+  @ApiProperty()
   @IsString()
   @IsOptional()
   title?: string;
 
+  @ApiProperty()
   @IsString()
   @IsOptional()
   content?: string;
 
+  @ApiProperty()
   @IsString()
   @IsOptional()
   excerpt?: string;
 
+  @ApiProperty()
   @IsBoolean()
   @IsOptional()
   published?: boolean;
 
+  @ApiProperty()
   @IsBoolean()
   @IsOptional()
   featured?: boolean;
 
+  @ApiProperty()
   @IsString()
   @IsOptional()
   categoryId?: string;
 
+  @ApiProperty()
   @IsArray()
   @IsString({ each: true })
   @IsOptional()

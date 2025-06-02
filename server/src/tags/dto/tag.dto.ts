@@ -1,4 +1,5 @@
 // src/tags/dto/tag.dto.ts
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsString,
   IsNotEmpty,
@@ -9,6 +10,7 @@ import {
 } from 'class-validator';
 
 export class CreateTagDto {
+  @ApiProperty()
   @IsString()
   @IsNotEmpty()
   @MinLength(2)
@@ -21,6 +23,7 @@ export class CreateTagDto {
 }
 
 export class UpdateTagDto {
+  @ApiProperty()
   @IsString()
   @IsOptional()
   @MinLength(2)
@@ -33,14 +36,17 @@ export class UpdateTagDto {
 }
 
 export class FindTagsDto {
+  @ApiProperty()
   @IsString()
   @IsOptional()
   search?: string;
 
+  @ApiProperty()
   @IsString()
   @IsOptional()
   sortBy?: 'name' | 'postCount' | 'createdAt';
 
+  @ApiProperty()
   @IsString()
   @IsOptional()
   sortOrder?: 'asc' | 'desc';
